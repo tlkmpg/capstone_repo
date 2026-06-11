@@ -1,0 +1,35 @@
+version: 2
+
+models:
+
+  - name: stg_tpch__orders
+    description: >
+      Staging model for raw TPCH orders data. This model standardizes column names,
+      preserves the original grain (one row per order), and prepares the dataset
+      for downstream enrichment and fact modeling.
+
+    columns:
+      - name: order_id
+        description: "Primary key of the order (unique identifier for each transaction)."
+        tests: [not_null, unique]
+
+      - name: customer_id
+        description: "Foreign key referencing the customer who placed the order."
+
+      - name: order_status
+        description: "Current status of the order (Open, Filled, or Pending)."
+        tests:
+          - accepted_values:
+              values: ['O', 'F', 'P']
+
+      - name: total_price
+        description: "Total monetary value of the order before further breakdown at line level."
+
+  - name: stg_tpch__lineitems
+    description: >
+      Staging model for line item details of each order. Each row represents a single
+      product within an order. Includes derived pricing metrics such as net and gross revenue.
+
+    columns:
+      - name: order_id
+        description: "Identifier linking the line item to its parent order."

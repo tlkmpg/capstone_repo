@@ -1,0 +1,69 @@
+version: 2
+
+sources:
+  - name: tpch
+    description: "Snowflake TPCH sample dataset (SF1)"
+    database: SNOWFLAKE_SAMPLE_DATA
+    schema: TPCH_SF1
+
+    tables:
+
+      - name: ORDERS
+        description: "Orders table"
+        loaded_at_field: O_ORDERDATE
+        freshness:
+          warn_after: {count: 24, period: hour}
+
+        columns:
+          - name: O_ORDERKEY
+          - name: O_CUSTKEY
+          - name: O_ORDERSTATUS
+          - name: O_TOTALPRICE
+          - name: O_ORDERDATE
+          - name: O_ORDERPRIORITY
+          - name: O_CLERK
+          - name: O_SHIPPRIORITY
+          - name: O_COMMENT
+
+      - name: LINEITEM
+        description: "Lineitem table"
+
+        columns:
+          - name: L_ORDERKEY
+          - name: L_PARTKEY
+          - name: L_SUPPKEY
+          - name: L_LINENUMBER
+          - name: L_QUANTITY
+          - name: L_EXTENDEDPRICE
+          - name: L_DISCOUNT
+          - name: L_TAX
+          - name: L_RETURNFLAG
+          - name: L_LINESTATUS
+          - name: L_SHIPDATE
+          - name: L_COMMITDATE
+          - name: L_RECEIPTDATE
+          - name: L_SHIPINSTRUCT
+          - name: L_SHIPMODE
+          - name: L_COMMENT
+
+      - name: CUSTOMER
+        description: "Customer table"
+
+        columns:
+          - name: C_CUSTKEY
+          - name: C_NAME
+          - name: C_ADDRESS
+          - name: C_NATIONKEY
+          - name: C_PHONE
+          - name: C_ACCTBAL
+          - name: C_MKTSEGMENT
+          - name: C_COMMENT
+
+      - name: NATION
+        description: "Nation table"
+
+        columns:
+          - name: N_NATIONKEY
+          - name: N_NAME
+          - name: N_REGIONKEY
+          - name: N_COMMENT
